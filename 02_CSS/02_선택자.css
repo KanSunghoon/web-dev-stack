@@ -33,3 +33,7 @@ p {
 #test1 > ul > li {
   color: red;
 }
+/* 7. 속성 선택자 */
+div[name] {
+  background-color: pink;
+}
