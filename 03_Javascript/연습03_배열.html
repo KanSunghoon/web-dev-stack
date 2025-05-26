@@ -13,7 +13,8 @@
         ["010", "1234", "5678"] → 010-1234-5678
         <script>
           const tel = ["010", "1234", "5678"];
-          const letters = ["010-1234-5678"];
+          const strTel = tel.join("-");
+          console.log(strTel);
         </script>
       </li>
 
@@ -22,6 +23,8 @@
         <script>
           const scores = [85, 98, 99, 76, 82];
           // [30, 50]
+          scores.splice(0, 5, 30, 50);
+          console.log(scores);
         </script>
       </li>
 
@@ -30,7 +33,10 @@
         <script>
           const music = ["가요", "팝송", "클래식", "재즈", "OST"];
           // [팝송, 클래식, 재즈]
+          console.log(music.slice(1, 4));
           // [OST]
+          console.log(music[music.length - 1]);
+          console.log(music.slice(4));
         </script>
       </li>
 
@@ -39,6 +45,8 @@
         <script>
           const numbers = [7, -24, -8, 10, 17, -58];
           // [-58, -24, -8, 7, 10, 17]
+          numbers.sort((a, b) => a - b);
+          console.log(numbers);
         </script>
       </li>
 
@@ -46,7 +54,7 @@
         배열에서 "B"의 인덱스를 찾아 출력하시오.
         <script>
           const letters = ["A", "B", "C"];
-          const
+          console.log(letters.indexOf("B"));
         </script>
       </li>
 
@@ -55,6 +63,8 @@
         <script>
           const words = ["one", "two", "three"];
           // [three, two, one]
+          words.reverse();
+          console.log(words);
         </script>
       </li>
 
@@ -63,6 +73,9 @@
         <script>
           const dupArr = [1, 2, 2, 3, 3, 3];
           // [1, 2, 3]
+          const unique = new Set(dupArr);
+          const uniArr = [...unique];
+          console.log(uniArr);
         </script>
       </li>
     </ol>
