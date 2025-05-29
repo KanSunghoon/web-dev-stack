@@ -1,0 +1,33 @@
+body {
+  text-align: center;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  height: 100vh;
+  margin: 0;
+}
+
+.text {
+  display: flex;
+  background: #f0f0f0;
+  padding: 1rem;
+  border: 1px solid;
+}
+
+section {
+  text-align: center;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  height: 100vh;
+}
+
+button {
+  justify-content: center;
+  background-color: ivory;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
