@@ -3,17 +3,20 @@ package com.kh.practice2;
 import java.util.ArrayList;
 import java.util.Scanner;
 
+import com.kh.practice2.controller.BookController;
+import com.kh.practice2.controller.MemberController;
 import com.kh.practice2.model.Book;
 import com.kh.practice2.model.Member;
 
 public class Application {
 	
-	// 멤버들의 정보가 들어갈 공간
-	ArrayList<Member> members = new ArrayList<>();
+	Scanner sc = new Scanner(System.in);
+	MemberController mc = new MemberController();
+	BookController bc = new BookController();
 	
 	// 대여 가능한 책 목록
     ArrayList<Book> books = new ArrayList<>();
-    
+
     {
         books.add(new Book("디스 이즈 이탈리아", false, 0));
         books.add(new Book("리얼 런던", true, 0));
@@ -23,62 +26,95 @@ public class Application {
         books.add(new Book("귀멸의 칼날 23", false, 19));
         books.add(new Book("진격의 거인 Before the fall 16", false, 19));
     }
-    
-    public void method1() {
-    	System.out.println("==== 메뉴 ====");
-    	System.out.println("1. 마이페이지");
-    	System.out.println("2. 도서 대여하기");
-    	System.out.println("3. 로그아웃");
-    	System.out.println("4. 프로그램 종료");
-    	System.out.println("메뉴를 선택하세요.");   	
-    	System.out.println("이름 : "); 
-    	System.out.println("나이 : ");
-    	
-    	   	  	
-    	switch(num) {
-    	case 1 : System.out.println("이름 : " + null + "나이 : " + null);
-    		break;
-    	case 2 : if() {
-    		System.out.println("더 이상 대여할 수 없습니다.");
-    	}
-    		break;
-    	case 3 : System.out.println("로그아웃");
-    		break;
-    	default : System.out.println("프로그램 종료");
-        }
-    }
 
 	public static void main(String[] args) {
+		Application app = new Application();
 		
-		/*
-		 * 이름 :
-		 * 나이 :
-		 * -> 회원가입/로그인 -> 조건 : 이름과 나이가 일치한 경우!
-		 * -> 기존에 회원 중 이름이 있으면 "이미 존재하는 이름입니다. 다시 입력해주실래요?"
-		 * 
-		 * ==== 메뉴 ====
-		 * 1. 마이페이지 -> 본인 정보
-		 * 2. 도서 대여하기
-		 * 		-> 1. 한 사람 당 대여할 수 있는 책은 총 3권
-		 * 				"더 이상 대여할 수 없습니다."
-		 *      -> 2. 해당 사람이 대여한 책은 대여 불가능
-		 *      		"이미 대여한 책입니다."
-		 *      -> 3. 나이 제한에 걸리는 책들 대여 불가능
-		 *      		"나이 제한으로 대여 불가능합니다."
-		 *      -> 4. 쿠폰이 있는 경우 나이 제한 걸려도 대여 가능
-		 *      -> (선택사항) 5. 각 책들마다 가능한 대여가 3권까지만
-		 *      			  HashMap -> getOrDefault(키, 초기값)
-		 *      -> 대여 가능한 경우 : "성공적으로 대여되었습니다."
-		 * 3. 로그아웃
-		 * 4. 프로그램 종료
-		 */
+		try {
+			app.menu();
+		} catch(Exception e) {
+			e.printStackTrace();
+			System.out.println("잘못 입력하셨습니다! 다시 입력해주세요ㅠㅠ");
+			app.menu();
+		}
+		
 	}
 	
-	public void menu() {
+	/*
+	 * 이름 : 
+	 * 나이 : 
+	 * ==== 메뉴 ====
+	 * 1. 마이페이지 -> 본인 정보
+	 * 2. 도서 대여하기
+	 * 3. 로그아웃
+	 * 4. 프로그램 종료
+	 * */
+	public void menu()  {
+		try {
+			System.out.print("이름 : ");
+			String name = sc.nextLine();
+			System.out.print("나이 : ");
+			int age = Integer.parseInt(sc.nextLine());
+			boolean result = mc.registerAndLogin(name, age);
+			if(!result) {
+				System.out.println("이미 존재하는 이름입니다. 다시 입력해주실래요?");
+				menu();
+			}
+			
+		} catch(Exception e) {
+			System.out.println("잘못 입력하셨습니다! 다시 입력해주세요ㅠㅠ");
+			menu();
+		}
+		
+		boolean check = true;
+		while(check) {
+			System.out.println("==== 메뉴 ====");
+			System.out.println("1. 마이페이지");
+			System.out.println("2. 도서 대여하기");
+			System.out.println("3. 로그아웃");
+			System.out.println("4. 프로그램 종료");
+			System.out.print("번호 : ");
+			
+			int select = Integer.parseInt(sc.nextLine());
+			switch(select) {
+				case 1:
+					System.out.println(mc.getMember());
+					break;
+				case 2:
+					rent();
+					break;
+				case 3:
+					mc.logout();
+					menu();
+					break;
+				case 4:
+					check = false;
+					break;
+			}
+		}
+		
 		
 	}
-
+	// 2. 도서 대여하기
 	public void rent() {
+		// 향상된 for문 : 값만 가지고 올 때 간단하게!
+		// 인덱스까지 필요하시다면 일반 for문!
+		for(int i = 0; i < books.size(); i++) {
+			System.out.println(i + "번째 " + books.get(i));
+		}
+		System.out.print("대여할 책 번호 선택 : ");
+		int select = Integer.parseInt(sc.nextLine());
 		
+		Object result = bc.rentBook(books.get(select), mc.getMember());
+		if(result instanceof Member) {
+			System.out.println("성공적으로 대여되었습니다.");
+			mc.setMember((Member)result);
+		} else {
+			System.out.println(result);
+		}
 	}
+	
 }
+
+
+
