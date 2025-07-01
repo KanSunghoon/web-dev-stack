@@ -95,4 +95,8 @@ public class MusicController {
 		return clone;
 	}
 	
+	public Music removeMusic(String song) {
+	    return removeMusic(song, null);
+	}
+	
 }
