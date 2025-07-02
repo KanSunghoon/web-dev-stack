@@ -44,7 +44,7 @@ public class TransactionTest2 {
 			if(rs.next()) {
 				if(rs.getInt("balance") < 0) {
 					// 잔액이 없음! -> 이체 취소!
-					System.out.println("잔액이 없으므로 이제 취소!");
+					System.out.println("잔액이 없으므로 이체 취소!");
 					connect.rollback();
 				} else {
 					// 이체 성공!
