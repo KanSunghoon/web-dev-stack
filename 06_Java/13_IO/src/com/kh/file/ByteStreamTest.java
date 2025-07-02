@@ -75,7 +75,6 @@ public class ByteStreamTest {
 				bos.write(buffer, 0, data);
 			}
 			
-
 		} catch (IOException e) {
 			e.printStackTrace();
 		} finally {
