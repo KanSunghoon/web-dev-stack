@@ -26,6 +26,8 @@ public class DBConnectionTest2 {
 		String query = "INSERT INTO user_info(id, password, name) VALUES(?, ?, ?)";
 		PreparedStatement ps = connect.prepareStatement(query);
 		
+		
+		
 		ps.setString(1, "user03");
 		ps.setString(2, "2222");
 		ps.setString(3, "김미경");
