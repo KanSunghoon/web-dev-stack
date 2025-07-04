@@ -66,41 +66,58 @@ public class PersonView {
 			for(Person p : list) {
 				System.out.println(p);
 			}
-		}			
+		}
 		
 	}
 	
 	public void searchPerson() {
-		try {
-			
-			searchAllPerson();
-			System.out.print("아이디 선택 > ");
-			int id = Integer.parseInt(sc.nextLine());
-			Person person = pc.searchPerson(id);
-			if(person!=null) System.out.println(person + "이 조회되었습니다!");
-			else System.out.println("아이디가 없습니다..");
-			
-		} catch (SQLException e) {
-			e.printStackTrace();
-		}
-	}
-	
-	public String updatePerson() {
-		try {
-			
-		} catch (SQLException e) {
-			return "수정 실패했습니다... ㅠㅠ";
-			
-		}
-	}
-
-	public String removePerson() {
 		searchAllPerson();
 		System.out.print("아이디 선택 > ");
 		int id = Integer.parseInt(sc.nextLine());
 		Person person = pc.searchPerson(id);
-		if(person!=null) return "조회된 아이디가 없습니다";
+		if(person!=null) System.out.println(person + "이 조회되었습니다!");
+		else System.out.println("아이디가 없습니다..");
+	}
+	
+	public String updatePerson() {
+		searchAllPerson();
+		
+		System.out.print("아이디 > ");
+		int id = Integer.parseInt(sc.nextLine());
+		
+		Person person = pc.searchPerson(id);
+		// 아이디가 없는 경우는 내보내기!
+		if(person == null) return "조회된 아이디가 없습니다";
+		
+		// 아이디가 있는 경우만 수정할 수 있도록!
+		System.out.print("이름 > ");
+		String name = sc.nextLine();
+		
+		System.out.print("나이 > ");
+		int age = Integer.parseInt(sc.nextLine());
+		
+		System.out.print("주소 > ");
+		String addr = sc.nextLine();
+		
+		return pc.updatePerson(name, age, addr, id);
+	}
+
+	public String removePerson() {
+		searchAllPerson();
+		
+		System.out.print("아이디 > ");
+		int id = Integer.parseInt(sc.nextLine());
+		
+		Person person;
+		person = pc.searchPerson(id);
+		
+		// 아이디가 없는 경우는 내보내기!
+		if(person == null) return "조회된 아이디가 없습니다";
+		// 아이디가 있는 경우만 삭제할 수 있도록!
 		return pc.removePerson(id);
 		
 	}
 }
+
+
+

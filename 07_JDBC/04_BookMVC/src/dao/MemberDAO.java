@@ -3,6 +3,7 @@ package dao;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.PreparedStatement;
+import java.sql.ResultSet;
 import java.sql.SQLException;
 
 import config.ServerInfo;
@@ -10,9 +11,9 @@ import vo.Member;
 
 public class MemberDAO {
 	
-	private MemberDAO instance = new MemberDAO();
+	private static MemberDAO instance = new MemberDAO();
 	
-	public MemberDAO() {
+	private MemberDAO() {
 		try {
 			Class.forName(ServerInfo.DRIVER);
 		} catch (ClassNotFoundException e) {
@@ -41,12 +42,26 @@ public class MemberDAO {
 	}
 	
 	// 5. 로그인
-	public Member login(String id, String pwd) {
+	public Member login(String id, String pwd) throws SQLException {
+		Connection connect = connect();
+		String query = "SELECT * FROM member WHERE id = ? AND pwd = ?";
+		PreparedStatement ps = connect.prepareStatement(query);
+		ps.setString(1, id);
+		ps.setString(2, pwd);
+		ResultSet rs = ps.executeQuery();
+		if(rs.next()) {
+			return new Member(rs.getString("id"), rs.getString("name"), 
+								rs.getString("pwd"), rs.getInt("age"));
+		}
 		return null;
 	}
 	
 	// 6. 회원탈퇴
-	public void delete(String id) {
-		
+	public void delete(String id) throws SQLException {
+		Connection connect = connect();
+		String query = "DELETE FROM member WHERE id = ?";
+		PreparedStatement ps = connect.prepareStatement(query);
+		ps.setString(1, id);
+		ps.executeUpdate();
 	}
 }

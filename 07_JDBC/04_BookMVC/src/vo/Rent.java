@@ -14,7 +14,7 @@ public class Rent { // -> rent
 	private int bookNo; // foreign key (Book) --> book_no
 	private LocalDate rentDate; // --> rent_date
 	
-	// -----------------------------------	
-	private Member member;
+	// ----------------------------------- VO, DTO
+	//private Member member;
 	private Book book;
 }
